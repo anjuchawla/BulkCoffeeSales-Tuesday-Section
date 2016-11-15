@@ -12,6 +12,24 @@ namespace BulkCoffeeSales
 {
     public partial class FormCoffeeBulkSales : Form
     {
+        private struct CoffeeSale
+        {
+            public String quantity;
+            public String type;
+            public decimal price;
+
+        }
+        //number of transactions that will be saved
+        private const int MaximumTransactions = 5;
+        //save the transactions in a 1d array
+        private CoffeeSale[] transactionsCoffeeSales = new CoffeeSale[MaximumTransactions];
+        //save transactions in a list
+        private List<CoffeeSale> transactionsCoffeeSalesList = new List<CoffeeSale>();
+        //keep track of the radio button/quantity of coffee
+        private string selectedRadioButtonName;
+        //index for the array
+        private int transactionNumber = 0; 
+
         public FormCoffeeBulkSales()
         {
             InitializeComponent();
@@ -21,7 +39,7 @@ namespace BulkCoffeeSales
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-
+            /*
             //setting up the print page for preview and print
             Font printFont = new Font("Arial", 12);
             Font headingFont = new Font("Arial Black", 14, FontStyle.Bold);
@@ -95,12 +113,13 @@ namespace BulkCoffeeSales
                 verticalPrintLocationFloat += lineHeightFloat;
 
 
-            }
+            }*/
 
             }
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
+            /*
             //preview the transaction report and print if required
             //print if there are any transactions
             if (transactionNumberInteger > 0)
@@ -115,8 +134,51 @@ namespace BulkCoffeeSales
                 MessageBox.Show("There are no transactions to print",
                    "Print Transactions", MessageBoxButtons.OK,
                    MessageBoxIcon.Information);
-            }
+            }*/
 
+        }
+
+        private void FormCoffeeBulkSales_Load(object sender, EventArgs e)
+        {
+            //default sttings when the applicationn starts
+            radioButtonQuarterPound.Checked = true;
+            selectedRadioButtonName = "radioButtonQuarterPound"; 
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            //terminate the application after confirming printing of transactions
+            DialogResult confirm = MessageBox.Show("Want tp print the transaction report before exit?",
+                "Transaction Report Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+            if(confirm == DialogResult.Yes)
+            {
+                buttonPrint_Click(sender, e);
+
+            }
+            Application.Exit();
+
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            //clear the form contents and bring back to default settings
+            comboBoxCoffeeType.SelectedIndex = -1;
+            radioButtonQuarterPound.Checked = true;
+            selectedRadioButtonName = "radioButtonQuarterPound";
+            textBoxPrice.Clear(); 
+        }
+
+        private void radioButtonQuantity_CheckedChanged(object sender, EventArgs e)
+        {
+            //keeps a track of the quantity of the coffee selected
+            selectedRadioButtonName = ((RadioButton)sender).Name;
+            
+        }
+
+        private void buttonFind_Click(object sender, EventArgs e)
+        {
+            //finds/looks up and displays the price of the selected coffee type and quantity 
         }
     }
 }

@@ -93,7 +93,7 @@
             this.textBoxPrice.Name = "textBoxPrice";
             this.textBoxPrice.ReadOnly = true;
             this.textBoxPrice.Size = new System.Drawing.Size(121, 22);
-            this.textBoxPrice.TabIndex = 7;
+            this.textBoxPrice.TabIndex = 8;
             this.textBoxPrice.TabStop = false;
             // 
             // comboBoxCoffeeType
@@ -107,23 +107,24 @@
             this.comboBoxCoffeeType.Location = new System.Drawing.Point(277, 70);
             this.comboBoxCoffeeType.Name = "comboBoxCoffeeType";
             this.comboBoxCoffeeType.Size = new System.Drawing.Size(121, 24);
-            this.comboBoxCoffeeType.TabIndex = 6;
+            this.comboBoxCoffeeType.TabIndex = 1;
             // 
             // buttonExit
             // 
             this.buttonExit.Location = new System.Drawing.Point(340, 184);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(75, 30);
-            this.buttonExit.TabIndex = 5;
+            this.buttonExit.TabIndex = 6;
             this.buttonExit.Text = "E&xit";
             this.buttonExit.UseVisualStyleBackColor = true;
+            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // buttonPrint
             // 
             this.buttonPrint.Location = new System.Drawing.Point(233, 184);
             this.buttonPrint.Name = "buttonPrint";
             this.buttonPrint.Size = new System.Drawing.Size(75, 30);
-            this.buttonPrint.TabIndex = 4;
+            this.buttonPrint.TabIndex = 5;
             this.buttonPrint.Text = "&Print";
             this.buttonPrint.UseVisualStyleBackColor = true;
             this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
@@ -133,18 +134,20 @@
             this.buttonClear.Location = new System.Drawing.Point(126, 184);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 30);
-            this.buttonClear.TabIndex = 3;
+            this.buttonClear.TabIndex = 4;
             this.buttonClear.Text = "&Clear";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonFind
             // 
             this.buttonFind.Location = new System.Drawing.Point(19, 184);
             this.buttonFind.Name = "buttonFind";
             this.buttonFind.Size = new System.Drawing.Size(75, 30);
-            this.buttonFind.TabIndex = 2;
+            this.buttonFind.TabIndex = 3;
             this.buttonFind.Text = "&Find Price";
             this.buttonFind.UseVisualStyleBackColor = true;
+            this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
             // 
             // label4
             // 
@@ -152,7 +155,7 @@
             this.label4.Location = new System.Drawing.Point(225, 119);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 17);
-            this.label4.TabIndex = 1;
+            this.label4.TabIndex = 7;
             this.label4.Text = "Price";
             // 
             // label3
@@ -172,7 +175,7 @@
             this.groupBoxQuantity.Location = new System.Drawing.Point(19, 44);
             this.groupBoxQuantity.Name = "groupBoxQuantity";
             this.groupBoxQuantity.Size = new System.Drawing.Size(165, 118);
-            this.groupBoxQuantity.TabIndex = 0;
+            this.groupBoxQuantity.TabIndex = 2;
             this.groupBoxQuantity.TabStop = false;
             this.groupBoxQuantity.Text = "Quantity";
             // 
@@ -208,6 +211,7 @@
             this.radioButtonQuarterPound.TabStop = true;
             this.radioButtonQuarterPound.Text = "&Quarter Pound";
             this.radioButtonQuarterPound.UseVisualStyleBackColor = true;
+            this.radioButtonQuarterPound.CheckedChanged += new System.EventHandler(this.radioButtonQuantity_CheckedChanged);
             // 
             // printPreviewDialog1
             // 
@@ -231,10 +235,12 @@
             this.Controls.Add(this.groupBoxCoffeePrices);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.Name = "FormCoffeeBulkSales";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "R \'n R for Reading and Refreshment";
+            this.Load += new System.EventHandler(this.FormCoffeeBulkSales_Load);
             this.groupBoxCoffeePrices.ResumeLayout(false);
             this.groupBoxCoffeePrices.PerformLayout();
             this.groupBoxQuantity.ResumeLayout(false);
