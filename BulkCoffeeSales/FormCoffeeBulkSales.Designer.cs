@@ -189,6 +189,7 @@
             this.radioButtonFullPound.TabStop = true;
             this.radioButtonFullPound.Text = "Fu&ll Pound";
             this.radioButtonFullPound.UseVisualStyleBackColor = true;
+            this.radioButtonFullPound.CheckedChanged += new System.EventHandler(this.radioButtonQuantity_CheckedChanged);
             // 
             // radioButtonHalfPound
             // 
@@ -200,6 +201,7 @@
             this.radioButtonHalfPound.TabStop = true;
             this.radioButtonHalfPound.Text = "&Half Pound";
             this.radioButtonHalfPound.UseVisualStyleBackColor = true;
+            this.radioButtonHalfPound.Click += new System.EventHandler(this.radioButtonQuantity_CheckedChanged);
             // 
             // radioButtonQuarterPound
             // 

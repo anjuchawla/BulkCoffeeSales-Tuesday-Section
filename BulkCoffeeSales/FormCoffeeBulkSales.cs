@@ -28,18 +28,18 @@ namespace BulkCoffeeSales
         //keep track of the radio button/quantity of coffee
         private string selectedRadioButtonName;
         //index for the array
-        private int transactionNumber = 0; 
+        private int transactionNumber = 0;
 
         public FormCoffeeBulkSales()
         {
             InitializeComponent();
         }
 
-       
+
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            /*
+            
             //setting up the print page for preview and print
             Font printFont = new Font("Arial", 12);
             Font headingFont = new Font("Arial Black", 14, FontStyle.Bold);
@@ -72,13 +72,13 @@ namespace BulkCoffeeSales
             {
                 //refer with transaction.quantityString
                 //print the quantity
-                e.Graphics.DrawString(transaction.quantityString, printFont,
+                e.Graphics.DrawString(transaction.quantity, printFont,
                     Brushes.Black, col1HorizontalPrintLocationFloat, verticalPrintLocationFloat);
                 //print the coffee type
-                e.Graphics.DrawString(transaction.typeString, printFont,
+                e.Graphics.DrawString(transaction.type, printFont,
                    Brushes.Black, col2HorizontalPrintLocationFloat, verticalPrintLocationFloat);
                 //format and right align the price
-                formattedPriceString = transaction.priceDecimal.ToString("c");
+                formattedPriceString = transaction.price.ToString("c");
                 //measure string in this fone
                 fontSizeF = e.Graphics.MeasureString(formattedPriceString, printFont);
                 //subtract width from column position
@@ -91,16 +91,16 @@ namespace BulkCoffeeSales
                 verticalPrintLocationFloat += lineHeightFloat;
             }
 
-            for (int index = 0; index < transactionNumberInteger; index++)
+            for (int index = 0; index < transactionNumber; index++)
             {
                 //print the quantity
-                e.Graphics.DrawString(transactionsCoffeeSales[index].quantityString, printFont,
+                e.Graphics.DrawString(transactionsCoffeeSales[index].quantity, printFont,
                     Brushes.Black, col1HorizontalPrintLocationFloat, verticalPrintLocationFloat);
                 //print the coffee type
-                e.Graphics.DrawString(transactionsCoffeeSales[index].typeString, printFont,
+                e.Graphics.DrawString(transactionsCoffeeSales[index].type, printFont,
                    Brushes.Black, col2HorizontalPrintLocationFloat, verticalPrintLocationFloat);
                 //format and right align the price
-                formattedPriceString = transactionsCoffeeSales[index].priceDecimal.ToString("c");
+                formattedPriceString = transactionsCoffeeSales[index].price.ToString("c");
                 //measure string in this fone
                 fontSizeF = e.Graphics.MeasureString(formattedPriceString, printFont);
                 //subtract width from column position
@@ -113,16 +113,16 @@ namespace BulkCoffeeSales
                 verticalPrintLocationFloat += lineHeightFloat;
 
 
-            }*/
-
             }
+
+        }
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
-            /*
+            
             //preview the transaction report and print if required
             //print if there are any transactions
-            if (transactionNumberInteger > 0)
+            if (transactionNumber > 0)
             {
                 printPreviewDialog1.Document = printDocument1;
                 printPreviewDialog1.ShowDialog();
@@ -134,7 +134,7 @@ namespace BulkCoffeeSales
                 MessageBox.Show("There are no transactions to print",
                    "Print Transactions", MessageBoxButtons.OK,
                    MessageBoxIcon.Information);
-            }*/
+            }
 
         }
 
@@ -142,7 +142,7 @@ namespace BulkCoffeeSales
         {
             //default sttings when the applicationn starts
             radioButtonQuarterPound.Checked = true;
-            selectedRadioButtonName = "radioButtonQuarterPound"; 
+            selectedRadioButtonName = "radioButtonQuarterPound";
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
@@ -151,7 +151,7 @@ namespace BulkCoffeeSales
             DialogResult confirm = MessageBox.Show("Want tp print the transaction report before exit?",
                 "Transaction Report Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
 
-            if(confirm == DialogResult.Yes)
+            if (confirm == DialogResult.Yes)
             {
                 buttonPrint_Click(sender, e);
 
@@ -166,19 +166,105 @@ namespace BulkCoffeeSales
             comboBoxCoffeeType.SelectedIndex = -1;
             radioButtonQuarterPound.Checked = true;
             selectedRadioButtonName = "radioButtonQuarterPound";
-            textBoxPrice.Clear(); 
+            textBoxPrice.Clear();
         }
 
         private void radioButtonQuantity_CheckedChanged(object sender, EventArgs e)
         {
             //keeps a track of the quantity of the coffee selected
             selectedRadioButtonName = ((RadioButton)sender).Name;
-            
+
         }
 
         private void buttonFind_Click(object sender, EventArgs e)
         {
             //finds/looks up and displays the price of the selected coffee type and quantity 
+
+            //save the prices of the coffees - quantity prices per row- quarter, half, full founf prices
+            //for regular, decaffinated and special blend
+            decimal[,] price = {
+                {2.60m, 2.90m, 3.25m },
+                { 4.90m, 5.60m, 6.10m},
+                {8.75m,9.75m,11.25m}
+            };
+            int row, column;
+            decimal salesPrice;
+            CoffeeSale sale;
+
+
+            //Console.WriteLine(price.GetLength(0));
+
+            //can't save more than 5 transactions
+            // if (transactionNumber < MaximumTransactions)
+            //{
+            try
+            {
+                column = comboBoxCoffeeType.SelectedIndex;
+
+                //was a coffee type selected?
+                if (column != -1)
+                {
+                    //find the quantity selected
+                    switch (selectedRadioButtonName)
+                    {
+
+                        case "radioButtonQuarterPound":
+                            row = 0;
+                            transactionsCoffeeSales[transactionNumber].quantity = "Quarter Pound";
+                            sale.quantity = "Quarter Pound";
+                            break;
+
+                        case "radioButtonHalfPound":
+                            row = 1;
+                            transactionsCoffeeSales[transactionNumber].quantity = "Half Pound";
+                            sale.quantity = "Half Pound";
+                            break;
+                        case "radioButtonFullPound":
+                            row = 2;
+                            transactionsCoffeeSales[transactionNumber].quantity = "Full Pound";
+                            sale.quantity = "Full Pound";
+                            break;
+                        default:
+                            row = 0;
+                            transactionsCoffeeSales[transactionNumber].quantity = "Quarter Pound";
+                            sale.quantity = "Quarter Pound";
+                            break;
+                    }//switch
+
+                    //find the price and display it
+                    salesPrice = price[row, column];
+                    textBoxPrice.Text = salesPrice.ToString("c");
+                    //complete the transaction information
+                    transactionsCoffeeSales[transactionNumber].type = comboBoxCoffeeType.Text;
+                    transactionsCoffeeSales[transactionNumber].price = salesPrice;
+                    transactionNumber++;
+                    //complete the sale information and save it in list
+                    sale.type = comboBoxCoffeeType.Text;
+                    sale.price = salesPrice;
+                    transactionsCoffeeSalesList.Add(sale);
+
+                }//coffee type selected
+                else
+                {
+                    MessageBox.Show("Please select a coffee type", "Incomplete Selection",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    comboBoxCoffeeType.Focus();
+                }
+            }//try ends
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Only " + MaximumTransactions + " are allowed. Cannot save the current transaction",
+            //        "Save Unsuccessful", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            //}
+            catch (IndexOutOfRangeException )
+            {
+                MessageBox.Show("Only " + MaximumTransactions + " are allowed. Cannot save the current transaction",
+                   "Save Unsuccessful", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            }
+
         }
     }
 }
